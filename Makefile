@@ -1,0 +1,27 @@
+# Compilador
+CXX = g++
+
+# Opciones de compilación para Release
+CXXFLAGS = -std=c++20 -Wall -O2 -static  # -O2 para optimización, -static para enlazado estático
+
+# Nombre del ejecutable
+TARGET = sonria.exe
+
+# Archivos fuente
+SRCS = main.cpp exe1.cpp exe2.cpp exe3.cpp exe4.cpp exe5.cpp exe6.cpp exe7.cpp exe8.cpp functions.cpp
+
+# Archivo de recursos (ruta relativa a la carpeta resources)
+RC_FILE = resources/resources.rc
+RES_OBJ = $(RC_FILE:.rc=.o)
+
+# Regla para construir el ejecutable
+$(TARGET): $(SRCS) $(RES_OBJ)
+	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRCS) $(RES_OBJ)
+
+# Regla para compilar el archivo de recursos (.rc) en Windows
+$(RES_OBJ): $(RC_FILE)
+	windres -O coff -i $< -o $@
+
+# Limpiar archivos generados
+clean:
+	rm -f $(RES_OBJ) $(TARGET)
